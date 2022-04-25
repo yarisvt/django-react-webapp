@@ -1,0 +1,50 @@
+.light {
+    $backgroundColor: #FEF7FF;
+    --backgroundColor: #{$backgroundColor};
+    --lightBackgroundColor: #{lighten($backgroundColor, 15%)};
+    --darkBackgroundColor: #{darken($backgroundColor, 15%)};
+  
+    $mainColor: #CCC;
+    --mainColor: #{$mainColor};
+    --lightMainColor: #{lighten($mainColor, 15%)};
+    --veryLightMainColor: #{lighten($mainColor, 10%)};
+    --darkMainColor: #{darken($mainColor, 15%)};
+  
+    $textColor: #4B4453;
+    --textColor: #{$textColor};
+    --darkTextColor: #{lighten($textColor, 30%)};
+    --veryDarkTextColor: #{darken($textColor, 90%)};
+    --contrastTextColor: #222;
+    --contrastTextColorHover: #AAA;
+  
+    --highlightColor: #4FFBDF;
+    --contrastColor: #D65DB1;
+  
+    --successColor: #00FF40;
+  }
+  
+  .dark {
+    $backgroundColor: #111;
+    --backgroundColor: #{$backgroundColor};
+    --lightBackgroundColor: #{lighten($backgroundColor, 15%)};
+    --darkBackgroundColor: #{darken($backgroundColor, 15%)};
+  
+    $mainColor: #111;
+    --mainColor: #{$mainColor};
+    --lightMainColor: #{lighten($mainColor, 15%)};
+    --veryLightMainColor: #{lighten($mainColor, 80%)};
+    --darkMainColor: #{darken($mainColor, 15%)};
+  
+    $textColor: rgba(255, 255, 255, 0.60);
+    --textColor: #{$textColor};
+    --darkTextColor: #{darken($textColor, 30%)};
+    --veryDarkTextColor: #{darken($textColor, 90%)};
+    --contrastTextColor: rgba(255, 255, 255, 0.87);
+    --contrastTextColorHover: rgba(255, 255, 255, 0.6);
+  
+    --highlightColor: rgba(255, 255, 255, 0.87);
+    --contrastColor: rgba(255, 255, 255, 0.38);
+  
+    --successColor: #00FF40;
+  }
+  

@@ -1,0 +1,19 @@
+.games-container {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(250px, 1fr));
+  grid-gap: 4rem;
+  justify-items: center;
+  align-items: flex-start;
+  width: 100%;
+  height: 100%;
+  padding: 0 4rem;
+  overflow-x: hidden;
+
+  @media only screen and (max-width: 1600px) {
+    grid-template-columns: repeat(3, minmax(250px, 1fr));
+  }
+
+  @media only screen and (max-width: 1000px) {
+    grid-template-columns: repeat(2, minmax(250px, 1fr));
+  }
+}

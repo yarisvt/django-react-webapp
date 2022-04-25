@@ -1,0 +1,40 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  padding-right: 1rem;
+  height: 4rem;
+  flex-shrink: 1;
+  background-color: var(--backgroundColor);
+  color: var(--contrastTextColor);
+  fill: var(--contrastTextColor);
+  margin-bottom: 0.5rem;
+
+  .link-home {
+    text-decoration: none;
+    padding: 1rem;
+    font-size: 1.5rem;
+    color: var(--contrastTextColor);
+    cursor: pointer;
+  }
+
+  .link-home:hover {
+    text-decoration: underline;
+    color: var(--contrastTextColorHover);
+  }
+
+  button {
+    margin-left: auto;
+    padding: 1rem;
+    border: none;
+    background: none;
+    color: inherit;
+    cursor: pointer;
+    font: inherit;
+    outline: inherit;
+  }
+
+  svg {
+    width: 2rem;
+    height: 2rem;
+  }
+}

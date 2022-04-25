@@ -1,0 +1,29 @@
+{
+    "configurations": [
+      {
+        "name": "Backend",
+        "type": "python",
+        "request": "launch",
+        "cwd": "${workspaceFolder}/backend",
+        "python": "${workspaceRoot}/env/Scripts/python.exe",
+        "program": "${workspaceRoot}/backend/manage.py",
+        "args": [
+            "runserver",
+        ],
+      },
+      {
+        "name": "Frontend",
+        "type": "node-terminal",
+        "request": "launch",
+        "command": "npm start",
+        "cwd": "${workspaceFolder}/frontend"
+      }
+    ],
+    "compounds": [
+      {
+        "name": "Backend/Frontend",
+        "configurations": ["Backend", "Frontend"]
+      }
+    ]
+  }
+  

@@ -22,20 +22,30 @@ export default function Game() {
               <div className='highscore-label'>Highscore</div>
             </div>
             <div className='country-item'>
-              <img
-                className='country-flag'
-                src={`${
-                  window.location.origin
-                }/img/flags/${data[0].country_code.toLowerCase()}.svg`}
-              />
-              <div className='country-name'>{data[0].country}</div>
-              <div className='country-stat'>
-                {data[1].stat.toLocaleString()}{' '}
-                {data[1].area && (
-                  <span>
-                    Km<sup>2</sup>
-                  </span>
+              <div className='country-flag-container'>
+                <img
+                  className='country-flag'
+                  src={`${
+                    window.location.origin
+                  }/img/flags/${data[0].country_code.toLowerCase()}.svg`}
+                />
+              </div>
+              <div className='country-info-container'>
+                <div className='country-name'>{data[0].country}</div>
+                {data[0].population && (
+                  <div className='country-population'>Population:</div>
                 )}
+                {data[0].area && (
+                  <div className='country-population'>Size:</div>
+                )}
+                <div className='country-stat'>
+                  {data[0].stat.toLocaleString()}
+                  {data[0].area && (
+                    <span>
+                      Km<sup>2</sup>
+                    </span>
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -45,20 +55,30 @@ export default function Game() {
               <div className='highscore-label'>Score</div>
             </div>
             <div className='country-item'>
-              <img
-                className='country-flag'
-                src={`${
-                  window.location.origin
-                }/img/flags/${data[1].country_code.toLowerCase()}.svg`}
-              />
-              <div className='country-name'>{data[1].country}</div>
-              <div className='country-stat'>
-                {data[1].stat.toLocaleString()}{' '}
-                {data[1].area && (
-                  <span>
-                    Km<sup>2</sup>
-                  </span>
+              <div className='country-flag-container'>
+                <img
+                  className='country-flag'
+                  src={`${
+                    window.location.origin
+                  }/img/flags/${data[1].country_code.toLowerCase()}.svg`}
+                />
+              </div>
+              <div className='country-info-container'>
+                <div className='country-name'>{data[1].country}</div>
+                {data[1].population && (
+                  <div className='country-population'>Population:</div>
                 )}
+                {data[1].area && (
+                  <div className='country-population'>Size:</div>
+                )}
+                <div className='country-stat'>
+                  {data[1].stat.toLocaleString()}
+                  {data[1].area && (
+                    <span>
+                      Km<sup>2</sup>
+                    </span>
+                  )}
+                </div>
               </div>
             </div>
           </div>

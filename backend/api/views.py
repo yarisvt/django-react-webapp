@@ -53,8 +53,8 @@ class GameInfoView(APIView):
         data_to_return = []
         for country in Country.objects.all():
             country_data = {"country": country.name}
-            country_aliases = list(country.aliases.values_list("alias", flat=True))
-            country_data["aliases"] = country_aliases
+            # country_aliases = list(country.aliases.values_list("alias", flat=True))
+            # country_data["aliases"] = country_aliases
             if game_info_data["select_capitals"] == 1:
                 capital_names = list(country.capitals.values_list("name", flat=True))
                 country_data["capitals"] = capital_names

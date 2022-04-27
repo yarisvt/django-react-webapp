@@ -46,6 +46,7 @@ export default function MoreOrLessItem({
       </>
     );
   } else if (gameType === 'population') {
+    // console.log('here', countUp, guess);
     countryInfo = (
       <>
         <div className='country-name'>{country}</div>
@@ -80,13 +81,11 @@ export default function MoreOrLessItem({
   }
 
   return (
-    <>
-      <div className='country-item'>
-        <div className='country-flag-container'>
-          <img className='country-flag' src={flagSrc} />
-        </div>
-        <div className='country-info-container'>{countryInfo}</div>
+    <div className='country-item'>
+      <div className='country-flag-container'>
+        <img className='country-flag' src={flagSrc} />
       </div>
-    </>
+      <div className='country-info-container'>{countryInfo}</div>
+    </div>
   );
 }

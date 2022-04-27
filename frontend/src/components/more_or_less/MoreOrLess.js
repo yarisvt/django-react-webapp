@@ -1,9 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import MoreOrLessItem from './MoreOrLessItem';
 import './more-or-less.scss';
 import EndScreen from './EndScreen';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
-function getRandomItem(arr) {
+function getRandomItem(arr, i) {
+  // return arr[i];
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
@@ -18,43 +20,46 @@ function getFromLocalStore(gameType) {
 }
 
 export default function MoreOrLess({ gameType, data }) {
-  const [leftItem, setLeftItem] = useState(getRandomItem(data));
-  const [rightItem, setRightItem] = useState(getRandomItem(data));
+  const [items, setItems] = useState([
+    getRandomItem(data, 0),
+    getRandomItem(data, 1),
+  ]);
 
-  const [showButtonsLeft, setShowButtonsLeft] = useState(false);
+  const [prevRightItem, setPrevRightItem] = useState(items[1]);
+
   const [showButtonsRight, setShowButtonsRight] = useState(true);
-
-  const [leftComponent, setLeftComponent] = useState();
-  const [rightComponent, setRightComponent] = useState();
 
   const [showEndScreen, setShowEndScreen] = useState(false);
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(getFromLocalStore(gameType));
 
-  const gameItemLeft = useRef();
-  const gameItemRight = useRef();
-
   const isBiggerCb = () => {
     setShowButtonsRight(false);
     setTimeout(() => {
-      if (rightItem.stat > leftItem.stat) {
+      if (items[1].stat > items[0].stat) {
         if (score + 1 > highScore) {
           storeInLocalStoreAndUpdate(highScore + 1, gameType, () =>
             setHighScore(highScore + 1)
           );
         }
         setScore(score + 1);
-        // gameItemLeft.current.classList.add('transform-left');
-        // gameItemRight.current.classList.add('transform-right');
+        setPrevRightItem(items[1]);
+
+        // setTimeout(() => {
+        setItems((items) => items.filter((item) => item.stat < 0.01));
+        // }, 500);
+        // setCountUp(false);
 
         setTimeout(() => {
-          // gameItemLeft.current.classList.remove('transform-left');
-          // gameItemLeft.current.style.display = 'none';
-          // gameItemRight.current.classList.remove('transform-right');
-          setShowButtonsRight(true);
-          setLeftItem({ ...rightItem });
-          setRightItem(getRandomItem(data));
-        }, 500);
+          setItems((items) => {
+            return [prevRightItem, getRandomItem(data, 3)];
+          });
+        }, 750);
+        setShowButtonsRight(true);
+
+        // setItems((prevItems) => {
+        //   return [prevItems[1], getRandomItem(data)];
+        // });
       } else {
         setShowEndScreen(true);
       }
@@ -64,22 +69,29 @@ export default function MoreOrLess({ gameType, data }) {
   const isSmallerCb = () => {
     setShowButtonsRight(false);
     setTimeout(() => {
-      if (rightItem.stat < leftItem.stat) {
+      if (items[1].stat < items[0].stat) {
         if (score + 1 > highScore) {
           storeInLocalStoreAndUpdate(highScore + 1, gameType, () =>
             setHighScore(highScore + 1)
           );
         }
-        // gameItemLeft.current.classList.add('transform-left');
-        // gameItemRight.current.classList.add('transform-right');
+        setScore(score + 1);
+        setPrevRightItem(items[1]);
+
+        // setTimeout(() => {
+        setItems((items) => items.filter((item) => item.stat < 0.01));
+        // }, 500);
+
         setTimeout(() => {
-          // gameItemLeft.current.classList.remove('transform-left');
-          // gameItemLeft.current.style.display = 'none';
-          // gameItemRight.current.classList.remove('transform-right');
-          setShowButtonsRight(true);
-          setLeftItem({ ...rightItem });
-          setRightItem(getRandomItem(data));
-        }, 500);
+          setItems((items) => {
+            return [prevRightItem, getRandomItem(data, 3)];
+          });
+        }, 750);
+        setShowButtonsRight(true);
+
+        // setItems((prevItems) => {
+        //   return [prevItems[1], getRandomItem(data)];
+        // });
       } else {
         setShowEndScreen(true);
       }
@@ -87,46 +99,11 @@ export default function MoreOrLess({ gameType, data }) {
   };
 
   const endScreenCb = () => {
-    setLeftItem(getRandomItem(data));
-    setRightItem(getRandomItem(data));
-    // setShowStat(false);
     setShowEndScreen(false);
+    setShowButtonsRight(true);
+    setItems([getRandomItem(data), getRandomItem(data)]);
     setScore(0);
   };
-
-  useEffect(() => {
-    setLeftComponent(
-      <MoreOrLessItem
-        gameType={gameType}
-        flagSrc={`${
-          window.location.origin
-        }/img/flags/${leftItem.countryCode.toLowerCase()}.svg`}
-        country={leftItem.country}
-        stat={leftItem.stat}
-        countryCode={leftItem.countryCode}
-        countUp={false}
-        guess={showButtonsLeft}
-      />
-    );
-  }, [leftItem, showButtonsLeft]);
-
-  useEffect(() => {
-    setRightComponent(
-      <MoreOrLessItem
-        gameType={gameType}
-        flagSrc={`${
-          window.location.origin
-        }/img/flags/${rightItem.countryCode.toLowerCase()}.svg`}
-        country={rightItem.country}
-        stat={rightItem.stat}
-        countryCode={rightItem.countryCode}
-        countUp={true}
-        guess={showButtonsRight}
-        isSmallerCb={isSmallerCb}
-        isBiggerCb={isBiggerCb}
-      />
-    );
-  }, [rightItem, showButtonsRight]);
 
   return (
     <>
@@ -144,16 +121,74 @@ export default function MoreOrLess({ gameType, data }) {
               <div className='highscore-label'>Highscore</div>
             </div>
           </div>
-          <div className='game-container'>
-            <div className='game-item game-item-left' ref={gameItemLeft}>
-              {leftComponent}
-            </div>
-            <div className='game-item game-item-right' ref={gameItemRight}>
-              {rightComponent}
-            </div>
-          </div>
+          <TransitionGroup className='game-container'>
+            {items.map((item, idx) => {
+              return (
+                <CSSTransition key={idx} timeout={500} classNames='item'>
+                  <MoreOrLessItem
+                    gameType={gameType}
+                    flagSrc={`${
+                      window.location.origin
+                    }/img/flags/${item.countryCode.toLowerCase()}.svg`}
+                    country={item.country}
+                    stat={item.stat}
+                    countryCode={item.countryCode}
+                    countUp={idx === 0 ? false : true}
+                    // countUp={idx === 0 ? showButtonsLeft : showButtonsRight}
+                    guess={idx === 0 ? false : showButtonsRight}
+                    isSmallerCb={isSmallerCb}
+                    isBiggerCb={isBiggerCb}
+                  />
+                </CSSTransition>
+              );
+            })}
+          </TransitionGroup>
         </div>
       )}
     </>
   );
+  // return (
+  //   <>
+  //     {showEndScreen ? (
+  //       <EndScreen score={score} againCb={endScreenCb} />
+  //     ) : (
+  //       <div className='page-container'>
+  //         <div className='score-container'>
+  //           <div className='score-item'>
+  //             <div className='score-count'>{score}</div>
+  //             <div className='score-label'>Score</div>
+  //           </div>
+  //           <div className='highscore-item'>
+  //             <div className='highscore-count'>{highScore}</div>
+  //             <div className='highscore-label'>Highscore</div>
+  //           </div>
+  //         </div>
+  //         <TransitionGroup className='game-container'>
+  //           {items.map((item) => (
+  //             <CSSTransition
+  //               key={item.country}
+  //               timeout={10000}
+  //               classNames='item'
+  //               // onEnter={console.log('entering')}
+  //               // onExit={console.log('exit')}
+  //             >
+  //               <div className='item'>
+  //                 {item.country}
+  //                 <button
+  //                   onClick={() =>
+  //                     setItems((items) =>
+  //                       items.filter((item) => item.country !== 'China')
+  //                     )
+  //                   }
+  //                 >
+  //                   {item.stat}
+  //                 </button>
+  //               </div>
+  //             </CSSTransition>
+  //           ))}
+  //         </TransitionGroup>
+  //       </div>
+  //     )}
+  //   </>
+  // );
 }

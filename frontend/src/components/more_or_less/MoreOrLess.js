@@ -116,6 +116,7 @@ export default function MoreOrLess({ gameType, data }) {
               <div className='score-count'>{score}</div>
               <div className='score-label'>Score</div>
             </div>
+            <div className='divider'></div>
             <div className='highscore-item'>
               <div className='highscore-count'>{highScore}</div>
               <div className='highscore-label'>Highscore</div>

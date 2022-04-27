@@ -18,6 +18,12 @@
   top: 0;
 }
 
+.divider {
+  background-color: var(--textColor);
+  height: 100vh;
+  width: 2px;
+}
+
 .score-item,
 .highscore-item {
   display: flex;

@@ -1,32 +1,14 @@
-import React from 'react';
-import CountryInfo from './CountryInfo';
+import React, { useRef } from 'react';
 
 export default function MoreOrLessItemToGuess({
   gameType,
   flagSrc,
   country,
-  showHighScore = false,
-  highScore,
-  score,
   isBiggerCb,
   isSmallerCb,
 }) {
-  let scoreItem;
-  if (showHighScore) {
-    scoreItem = (
-      <>
-        <div className='highscore-count'>{highScore}</div>
-        <div className='highscore-label'>Highscore</div>
-      </>
-    );
-  } else {
-    scoreItem = (
-      <>
-        <div className='score-count'>{score}</div>
-        <div className='score-label'>Score</div>
-      </>
-    );
-  }
+  const countryItemRef = useRef();
+
   let countryInfo;
   if (gameType === 'area') {
     countryInfo = (
@@ -48,16 +30,19 @@ export default function MoreOrLessItemToGuess({
 
   return (
     <>
-      <div className='score-item'>{scoreItem}</div>
-      <div className='country-item'>
+      <div className='country-item' ref={countryItemRef}>
         <div className='country-flag-container'>
           <img className='country-flag' src={flagSrc} />
         </div>
-        <CountryInfo
-          countryInfo={countryInfo}
-          isSmallerCb={isSmallerCb}
-          isBiggerCb={isBiggerCb}
-        />
+        <div className='country-info-container'>
+          {countryInfo}
+          <button onClick={isSmallerCb} className='btn-smaller'>
+            Smaller
+          </button>
+          <button onClick={isBiggerCb} className='btn-bigger'>
+            Bigger
+          </button>
+        </div>
       </div>
     </>
   );

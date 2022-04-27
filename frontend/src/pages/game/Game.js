@@ -12,17 +12,9 @@ export default function Game() {
       .then(setData);
   }, []);
 
-  let content = <div></div>;
-
   if (data.length === 0) {
     return;
   }
 
-  if (data.gameType === 'population') {
-    content = <MoreOrLess gameType={'population'} {...data} />;
-  } else if (data.gameType === 'area') {
-    content = <MoreOrLess gameType={'area'} {...data} />;
-  }
-
-  return content;
+  return <MoreOrLess gameType={data.gameType} {...data} />;
 }

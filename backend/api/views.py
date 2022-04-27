@@ -1,3 +1,4 @@
+from typing import Any
 from django.http import JsonResponse
 from rest_framework import status
 from django.core import serializers
@@ -50,7 +51,13 @@ class GameInfoView(APIView):
 
         game_info_data = GameInfoSerializer(game_information[0]).data
 
-        data_to_return = []
+        data_to_return: dict[str, Any] = {"data": []}
+
+        if game_info_data["select_area"] == 1:
+            data_to_return["gameType"] = "area"
+        elif game_info_data["select_population"] == 1:
+            data_to_return["gameType"] = "population"
+
         for country in Country.objects.all():
             country_data = {"country": country.name}
             # country_aliases = list(country.aliases.values_list("alias", flat=True))
@@ -60,12 +67,10 @@ class GameInfoView(APIView):
                 country_data["capitals"] = capital_names
             if game_info_data["select_population"] == 1:
                 country_data["stat"] = country.population_size
-                country_data["population"] = True
             elif game_info_data["select_area"] == 1:
                 country_data["stat"] = country.area
-                country_data["area"] = True
             if game_info_data["select_flag"] == 1:
-                country_data["country_code"] = country.country_code
-            data_to_return.append(country_data)
+                country_data["countryCode"] = country.country_code
+            data_to_return["data"].append(country_data)
 
         return Response(data_to_return, status=status.HTTP_200_OK)

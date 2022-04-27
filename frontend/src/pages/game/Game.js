@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import './game.scss';
+import MoreOrLess from '../../components/more_or_less/MoreOrLess';
 
 export default function Game() {
   const [data, setData] = useState([]);
@@ -12,78 +12,17 @@ export default function Game() {
       .then(setData);
   }, []);
 
-  return (
-    <div>
-      {data.length > 0 && (
-        <div className='page-container'>
-          <div className='left-container'>
-            <div className='score-item'>
-              <div className='highscore-count'>0</div>
-              <div className='highscore-label'>Highscore</div>
-            </div>
-            <div className='country-item'>
-              <div className='country-flag-container'>
-                <img
-                  className='country-flag'
-                  src={`${
-                    window.location.origin
-                  }/img/flags/${data[0].country_code.toLowerCase()}.svg`}
-                />
-              </div>
-              <div className='country-info-container'>
-                <div className='country-name'>{data[0].country}</div>
-                {data[0].population && (
-                  <div className='country-population'>Population:</div>
-                )}
-                {data[0].area && (
-                  <div className='country-population'>Size:</div>
-                )}
-                <div className='country-stat'>
-                  {data[0].stat.toLocaleString()}
-                  {data[0].area && (
-                    <span>
-                      Km<sup>2</sup>
-                    </span>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className='right-container'>
-            <div className='score-item'>
-              <div className='highscore-count'>0</div>
-              <div className='highscore-label'>Score</div>
-            </div>
-            <div className='country-item'>
-              <div className='country-flag-container'>
-                <img
-                  className='country-flag'
-                  src={`${
-                    window.location.origin
-                  }/img/flags/${data[1].country_code.toLowerCase()}.svg`}
-                />
-              </div>
-              <div className='country-info-container'>
-                <div className='country-name'>{data[1].country}</div>
-                {data[1].population && (
-                  <div className='country-population'>Population:</div>
-                )}
-                {data[1].area && (
-                  <div className='country-population'>Size:</div>
-                )}
-                <div className='country-stat'>
-                  {data[1].stat.toLocaleString()}
-                  {data[1].area && (
-                    <span>
-                      Km<sup>2</sup>
-                    </span>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
-  );
+  let content = <div></div>;
+
+  if (data.length === 0) {
+    return;
+  }
+
+  if (data.gameType === 'population') {
+    content = <MoreOrLess gameType={'population'} {...data} />;
+  } else if (data.gameType === 'area') {
+    content = <MoreOrLess gameType={'area'} {...data} />;
+  }
+
+  return content;
 }

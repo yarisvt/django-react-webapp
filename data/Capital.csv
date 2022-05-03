@@ -1,0 +1,204 @@
+id,name,country_id
+1,Beijing,1
+2,New Delhi,2
+3,Washington D.C.,3
+4,Jakarta,4
+5,Islamabad,5
+6,Abuja,6
+7,Brasília,7
+8,Dhaka,8
+9,Moscow,9
+10,Mexico City,10
+11,Tokyo,11
+12,Addis Ababa,12
+13,Manila,13
+14,Cairo,14
+15,Hanoi,15
+16,Kinshasa,16
+17,Tehran,17
+18,Ankara,18
+19,Berlin,19
+20,Bangkok,20
+21,London,21
+22,Paris,22
+23,Dodoma,23
+24,Pretoria,24
+25,Cape Town,24
+26,Bloemfontein,24
+27,Rome,25
+28,Nairobi,26
+29,Nay Pyi Taw,27
+30,Bogotá,28
+31,Seoul,29
+32,Kampala,30
+33,Madrid,31
+34,Buenos Aires,32
+35,Khartoum,33
+36,Algiers,34
+37,Kyiv,35
+38,Baghdad,36
+39,Kabul,37
+40,Ottawa,38
+41,Rabat,39
+42,Warsaw,40
+43,Riyadh,41
+44,Luanda,42
+45,Tashkent,43
+46,Lima,44
+47,Kuala Lumpur,45
+48,Putrajaya,45
+49,Maputo,46
+50,Accra,47
+51,Sanaa,48
+52,Kathmandu,49
+53,Caracas,50
+54,Antananarivo,51
+55,Yaoundé,52
+56,Yamoussoukro,53
+57,Niamey,54
+58,Canberra,55
+59,Pyongyang,56
+60,Taipei,57
+61,Ouagadougou,58
+62,Colombo,59
+63,Sri Jayawardenepura Kotte,59
+64,Bamako,60
+65,Lilongwe,61
+66,Lusaka,62
+67,Damascus,63
+68,Santiago,64
+69,Nur-Sultan,65
+70,Bucharest,66
+71,Guatemala City,67
+72,Quito,68
+73,Dakar,69
+74,N'Djamena,70
+75,Amsterdam,71
+76,Phnom Penh,72
+77,Mogadishu,73
+78,Harare,74
+79,Conakry,75
+80,Kigali,76
+81,Porto-Novo,77
+82,Kigela,78
+83,Tunis,79
+84,La Paz,80
+85,Sucre,80
+86,Port-au-Prince,81
+87,Brussels,82
+88,Juba,83
+89,Havana,84
+90,Santo Domingo,85
+91,Prague,86
+92,Athens,87
+93,Amman,88
+94,Baku,89
+95,Tegucigalpa,90
+96,Stockholm,91
+97,Lisbon,92
+98,Abu Dhabi,93
+99,Dushanbe,94
+100,Budapest,95
+101,Minsk,96
+102,Port Moresby,97
+103,Vienna,98
+104,Jerusalem,99
+105,Bern,100
+106,Lomé,101
+107,Belgrade,102
+108,Freetown,103
+109,Vientiane,104
+110,Asunción,105
+111,Tripoli,106
+112,Sofia,107
+113,Managua,108
+114,Bishkek,109
+115,Beirut,110
+116,San Salvador,111
+117,Ashgabat,112
+118,Singapore,113
+119,Copenhagen,114
+120,Brazzaville,115
+121,Helsinki,116
+122,Oslo,117
+123,Bratislava,118
+124,Ramallah,119
+125,Muscat,120
+126,Monrovia,121
+127,San José,122
+128,Dublin,123
+129,Bangui,124
+130,Nouakchott,125
+131,Wellington,126
+132,Panama City,127
+133,Kuwait City,128
+134,Zagreb,129
+135,Chișinău,130
+136,Tbilisi,131
+137,Asmara,132
+138,Montevideo,133
+139,Ulaanbaatar,134
+140,Sarajevo,135
+141,Kingston,136
+142,Doha,137
+143,Yerevan,138
+144,Tirana,139
+145,Vilnius,140
+146,Windhoek,141
+147,Banjul,142
+148,Gaborone,143
+149,Libreville,144
+150,Maseru,145
+151,Skopje,146
+152,Ljubljana,147
+153,Bissau,148
+154,Riga,149
+155,Pristina,150
+156,Manama,151
+157,Malabo,152
+158,Port of Spain,153
+159,Dili,154
+160,Tallinn,155
+161,Port Louis,156
+162,Nicosia,157
+163,Lobamba,158
+164,Mbabane,158
+165,Djibouti,159
+166,Suva,160
+167,Moroni,161
+168,Georgetown,162
+169,Thimphu,163
+170,Honiara,164
+171,Luxembourg,165
+172,Podgorica,166
+173,Paramaribo,167
+174,Praia,168
+175,Malé,169
+176,Bandar Seri Begawan,170
+177,Valletta,171
+178,Belmopan,172
+179,Nassau,173
+180,Reykjavík,174
+181,Port Vila,175
+182,Bridgetown,176
+183,São Tomé,177
+184,Apia,178
+185,Castries,179
+186,South Tarawa,180
+187,Palikir,181
+188,Saint George's,182
+189,Kingstown,183
+190,Nuku'alofa,184
+191,Saint John's,185
+192,Victoria,186
+193,Andorra la Vella,187
+194,Roseau,188
+195,Majuro,189
+196,Basseterre,190
+197,Monaco,191
+198,Vaduz,192
+199,City of San Marino,193
+200,Ngerulmud,194
+201,Funafuti,195
+202,Yaren,196
+203,Vatican City,197

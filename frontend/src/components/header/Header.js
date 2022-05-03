@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useThemeStore } from '../../context/ThemeContext';
 
 import './header.scss';
@@ -8,6 +8,7 @@ function Header() {
   const [theme, setTheme] = useThemeStore();
   const [showHome, setShowHome] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   document.getElementById('root').className = theme;
 
@@ -28,9 +29,9 @@ function Header() {
   return (
     <header>
       {showHome && (
-        <Link className='link-home' to='/'>
-          &lsaquo; Home
-        </Link>
+        <a className='link-home' onClick={() => navigate(-1)}>
+          &lsaquo; Back
+        </a>
       )}
       <button onClick={toggleTheme} className='header-item'>
         <svg

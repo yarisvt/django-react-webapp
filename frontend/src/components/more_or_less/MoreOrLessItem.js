@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import CountUp from 'react-countup';
 
 export default function MoreOrLessItem({
@@ -8,36 +8,60 @@ export default function MoreOrLessItem({
   stat,
   countUp = true,
   guess = false,
-  isSmallerCb,
-  isBiggerCb,
+  buttonCb,
 }) {
+  const [countryStat, setCountryStat] = useState();
+  const [showButtons, setShowButtons] = useState(guess);
+
+  useEffect(() => {
+    if (countUp === true) {
+      setCountryStat(
+        <CountUp
+          start={0}
+          end={stat}
+          duration={1.5}
+          formattingFn={(num) => num.toLocaleString()}
+        />
+      );
+    } else {
+      setCountryStat(stat.toLocaleString());
+    }
+  }, [stat]);
+
+  const buttons = (
+    <>
+      <button
+        onClick={() => {
+          setShowButtons(false);
+          buttonCb('smaller', () => setShowButtons(true));
+        }}
+        className='btn-smaller'
+      >
+        Smaller
+      </button>
+      <button
+        onClick={() => {
+          setShowButtons(false);
+          buttonCb('bigger', () => setShowButtons(true));
+        }}
+        className='btn-bigger'
+      >
+        Bigger
+      </button>
+    </>
+  );
+
   let countryInfo;
   if (gameType === 'area') {
     countryInfo = (
       <>
         <div className='country-name'>{country}</div>
         <div className='country-area'>Size:</div>
-        {guess === true ? (
-          <>
-            <button onClick={isSmallerCb} className='btn-smaller'>
-              Smaller
-            </button>
-            <button onClick={isBiggerCb} className='btn-bigger'>
-              Bigger
-            </button>
-          </>
+        {showButtons === true ? (
+          buttons
         ) : (
           <div className='country-stat'>
-            {countUp === true ? (
-              <CountUp
-                start={0}
-                end={stat}
-                duration={1.5}
-                formattingFn={(num) => num.toLocaleString()}
-              />
-            ) : (
-              stat.toLocaleString()
-            )}
+            {countryStat}
             <span>
               Km<sup>2</sup>
             </span>
@@ -46,33 +70,14 @@ export default function MoreOrLessItem({
       </>
     );
   } else if (gameType === 'population') {
-    // console.log('here', countUp, guess);
     countryInfo = (
       <>
         <div className='country-name'>{country}</div>
         <div className='country-population'>Population:</div>
-        {guess === true ? (
-          <>
-            <button onClick={isSmallerCb} className='btn-smaller'>
-              Smaller
-            </button>
-            <button onClick={isBiggerCb} className='btn-bigger'>
-              Bigger
-            </button>
-          </>
+        {showButtons === true ? (
+          buttons
         ) : (
-          <div className='country-stat'>
-            {countUp === true ? (
-              <CountUp
-                start={0}
-                end={stat}
-                duration={1.5}
-                formattingFn={(num) => num.toLocaleString()}
-              />
-            ) : (
-              stat.toLocaleString()
-            )}
-          </div>
+          <div className='country-stat'>{countryStat}</div>
         )}
       </>
     );

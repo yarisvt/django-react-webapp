@@ -6,7 +6,7 @@ export default function Games() {
   const [games, setGames] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:8000/api/all-games')
+    fetch(`${process.env.REACT_APP_API_BASE_URL}/api/all-games`)
       .then((res) => res.json())
       .then(setGames);
   }, []);

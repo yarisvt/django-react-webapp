@@ -7,7 +7,7 @@ export default function Game() {
   const { id } = useParams();
 
   useEffect(() => {
-    fetch(`http://localhost:8000/api/game-info?game-id=${id}`)
+    fetch(`${process.env.REACT_APP_API_BASE_URL}/api/game-info?game-id=${id}`)
       .then((res) => res.json())
       .then(setData);
   }, []);

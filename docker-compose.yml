@@ -13,10 +13,12 @@ services:
   frontend:
     build: ./frontend
     restart: always
+    env_file:
+      - frontend/.env
     depends_on:
       - backend
     ports:
-      - "50074:3000"
+      - "50075:3000"
   db:
     image: mariadb:10.5.9
     command:

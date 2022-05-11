@@ -1,7 +1,7 @@
 ## A simple webapplication with django and react
 
 
-### Start webapp:
+### Start app:
 ```bash
-docker-compose --env-file ./backend/.env up
+docker-compose up
 ```

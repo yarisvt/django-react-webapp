@@ -16,5 +16,12 @@ export default function Game() {
     return;
   }
 
-  return <MoreOrLess gameType={data.gameType} {...data} />;
+  return (
+    <MoreOrLess
+      gametype={data.gameType}
+      label={data.label}
+      statExtra={data.statExtra}
+      {...data}
+    />
+  );
 }

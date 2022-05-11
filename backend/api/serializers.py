@@ -1,10 +1,20 @@
 from rest_framework import serializers
-from .models import Gameinformation
+from .models import (
+    Capital,
+    Capitalalias,
+    Continent,
+    Country,
+    Countryalias,
+    Countrycontinent,
+    Game,
+    GameInformation,
+    GameType,
+)
 
 
 class CapitalSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Gameinformation
+        model = Capital
         fields = (
             "id",
             "name",
@@ -14,7 +24,7 @@ class CapitalSerializer(serializers.ModelSerializer):
 
 class CapitalAliasSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Gameinformation
+        model = Capitalalias
         fields = (
             "id",
             "alias",
@@ -24,7 +34,7 @@ class CapitalAliasSerializer(serializers.ModelSerializer):
 
 class ContinentSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Gameinformation
+        model = Continent
         fields = (
             "id",
             "name",
@@ -33,7 +43,7 @@ class ContinentSerializer(serializers.ModelSerializer):
 
 class CountrySerializer(serializers.ModelSerializer):
     class Meta:
-        model = Gameinformation
+        model = Country
         fields = (
             "id",
             "name",
@@ -45,7 +55,7 @@ class CountrySerializer(serializers.ModelSerializer):
 
 class CountryAliasSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Gameinformation
+        model = Countryalias
         fields = (
             "id",
             "alias",
@@ -55,7 +65,7 @@ class CountryAliasSerializer(serializers.ModelSerializer):
 
 class CountryContinentSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Gameinformation
+        model = Countrycontinent
         fields = (
             "id",
             "country_id",
@@ -63,21 +73,21 @@ class CountryContinentSerializer(serializers.ModelSerializer):
         )
 
 
+class GameTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = GameType
+        fields = ("id", "game_type")
+
+
 class GameSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Gameinformation
-        fields = (
-            "id",
-            "title",
-            "subtitle",
-            "image_source",
-            "url_to",
-        )
+        model = Game
+        fields = ("id", "title", "subtitle", "image_source", "url_to", "gametype_id")
 
 
 class GameInfoSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Gameinformation
+        model = GameInformation
         fields = (
             "id",
             "select_country",
@@ -87,7 +97,7 @@ class GameInfoSerializer(serializers.ModelSerializer):
             "select_population",
             "select_area",
             "select_flag",
-            "more_or_less",
-            "name_it",
+            "label",
+            "stat_extra",
             "game_id",
         )

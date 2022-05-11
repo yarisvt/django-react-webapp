@@ -69,19 +69,29 @@ class Countrycontinent(models.Model):
         db_table = "CountryContinent"
 
 
+class GameType(models.Model):
+    id = models.IntegerField(primary_key=True)
+    game_type = models.CharField(max_length=100)
+
+    class Meta:
+        managed = False
+        db_table = "GameType"
+
+
 class Game(models.Model):
     id = models.IntegerField(primary_key=True)
     title = models.CharField(max_length=100)
     subtitle = models.CharField(max_length=1000)
     image_source = models.CharField(max_length=100)
     url_to = models.CharField(max_length=100)
+    gametype = models.ForeignKey(GameType, models.DO_NOTHING)
 
     class Meta:
         managed = False
         db_table = "Game"
 
 
-class Gameinformation(models.Model):
+class GameInformation(models.Model):
     id = models.IntegerField(primary_key=True)
     select_country = models.IntegerField()
     select_country_aliases = models.IntegerField()
@@ -90,8 +100,8 @@ class Gameinformation(models.Model):
     select_population = models.IntegerField()
     select_area = models.IntegerField()
     select_flag = models.IntegerField()
-    more_or_less = models.IntegerField()
-    name_it = models.IntegerField()
+    label = models.CharField(max_length=100)
+    stat_extra = models.CharField(max_length=100)
     game = models.ForeignKey(Game, models.DO_NOTHING)
 
     class Meta:

@@ -1,8 +1,6 @@
 from typing import Any
-from django.http import JsonResponse
 from rest_framework import status
-from django.core import serializers
-from .models import Country, Game, Gameinformation
+from .models import Country, Game, GameInformation
 from .serializers import GameInfoSerializer, GameSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -13,7 +11,7 @@ from rest_framework.response import Response
 class AllGamesView(APIView):
     serializer_class = GameSerializer
 
-    def get(self, request):
+    def get(self, _):
         games = Game.objects.all()
 
         data_to_return = []
@@ -42,7 +40,7 @@ class GameInfoView(APIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-        game_information = Gameinformation.objects.filter(id=game_id)
+        game_information = GameInformation.objects.filter(id=game_id)
         if len(game_information) < 1:
             return Response(
                 {"Game not found": "Invalid game id code"},
@@ -58,6 +56,9 @@ class GameInfoView(APIView):
         elif game_info_data["select_population"] == 1:
             data_to_return["gameType"] = "population"
 
+        data_to_return["label"] = game_info_data["label"]
+        data_to_return["statExtra"] = game_info_data["stat_extra"]
+
         for country in Country.objects.all():
             country_data = {"country": country.name}
             # country_aliases = list(country.aliases.values_list("alias", flat=True))
@@ -71,6 +72,7 @@ class GameInfoView(APIView):
                 country_data["stat"] = country.area
             if game_info_data["select_flag"] == 1:
                 country_data["countryCode"] = country.country_code
+
             data_to_return["data"].append(country_data)
 
         return Response(data_to_return, status=status.HTTP_200_OK)

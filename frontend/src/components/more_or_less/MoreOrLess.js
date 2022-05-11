@@ -9,7 +9,7 @@ import {
   sleep,
 } from '../../utils/utils.js';
 
-export default function MoreOrLess({ gameType, data }) {
+export default function MoreOrLess({ gameType, label, statExtra, data }) {
   const [items, setItems] = useState([
     getRandomItem(data),
     getRandomItem(data, 182),
@@ -70,7 +70,7 @@ export default function MoreOrLess({ gameType, data }) {
       {showEndScreen ? (
         <EndScreen score={score} againCb={endScreenCb} />
       ) : (
-        <div className='page-container'>
+        <div className='page-container' style={{ overflow: 'hidden' }}>
           <div className='score-container'>
             <div className='score-item'>
               <div className='score-count'>{score}</div>
@@ -92,13 +92,13 @@ export default function MoreOrLess({ gameType, data }) {
                       ? 'country-item last'
                       : 'country-item'
                   }
-                  gameType={gameType}
                   flagSrc={`${
                     window.location.origin
                   }/img/flags/${item.countryCode.toLowerCase()}.svg`}
                   country={item.country}
                   stat={item.stat}
-                  countryCode={item.countryCode}
+                  label={label}
+                  statExtra={statExtra}
                   countUp={idx === 0 ? false : true}
                   guess={idx === 0 ? false : true}
                   buttonCb={clickButtonCb}

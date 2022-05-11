@@ -14,14 +14,10 @@
 html,
 body {
   display: flex;
-  width: 100%;
+  width: 100vw;
   height: 100%;
   flex-direction: column;
   background-color: var(--backgroundColor);
   color: var(--textColor);
-  overflow: hidden;
-}
-
-body {
-  min-height: 100vh;
+  overflow-x: hidden;
 }

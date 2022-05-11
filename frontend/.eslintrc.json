@@ -49,7 +49,7 @@
     "space-infix-ops": ["error"],
     "vars-on-top": "warn",
     "no-unused-expressions": "warn",
-    "eqeqeq": "warn",
+    "eqeqeq": "off",
     "default-case": "error",
     "max-classes-per-file": "error",
     // "no-console": [

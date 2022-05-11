@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import Parser from 'html-react-parser';
 import CountUp from 'react-countup';
 
 export default function MoreOrLessItem({
-  gameType,
   flagSrc,
   country,
   stat,
+  label,
+  statExtra,
   countUp = true,
   guess = false,
   buttonCb,
@@ -51,46 +53,22 @@ export default function MoreOrLessItem({
     </>
   );
 
-  let countryInfo;
-  if (gameType === 'area') {
-    countryInfo = (
-      <>
-        <div className='country-name'>{country}</div>
-        <div className='country-area'>Size:</div>
-        {showButtons === true ? (
-          buttons
-        ) : (
-          <div className='country-stat'>
-            {countryStat}
-            <span>
-              Km<sup>2</sup>
-            </span>
-          </div>
-        )}
-      </>
-    );
-  } else if (gameType === 'population') {
-    countryInfo = (
-      <>
-        <div className='country-name'>{country}</div>
-        <div className='country-population'>Population:</div>
-        {showButtons === true ? (
-          buttons
-        ) : (
-          <div className='country-stat'>{countryStat}</div>
-        )}
-      </>
-    );
-  } else {
-    countryInfo = <></>;
-  }
-
   return (
     <div className='country-item'>
       <div className='country-flag-container'>
         <img className='country-flag' src={flagSrc} />
       </div>
-      <div className='country-info-container'>{countryInfo}</div>
+      <div className='country-info-container'>
+        <div className='country-name'>{country}</div>
+        <div className='country-label'>{label}</div>
+        {showButtons === true ? (
+          buttons
+        ) : (
+          <div className='country-stat'>
+            {countryStat} {statExtra && Parser(statExtra)}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

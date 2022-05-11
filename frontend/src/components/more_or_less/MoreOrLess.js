@@ -3,65 +3,99 @@ import MoreOrLessItem from './MoreOrLessItem';
 import './more-or-less.scss';
 import EndScreen from './EndScreen';
 import {
-  getRandomItem,
   storeInLocalStoreAndUpdate,
   getFromLocalStore,
   sleep,
+  shuffleArray,
 } from '../../utils/utils.js';
+import WinScreen from './WinScreen';
 
 export default function MoreOrLess({ gameType, label, statExtra, data }) {
-  const [items, setItems] = useState([
-    getRandomItem(data),
-    getRandomItem(data, 182),
-    getRandomItem(data),
-  ]);
+  const [shuffledData, setShuffledData] = useState(shuffleArray(data));
+
+  const [items, setItems] = useState(() => {
+    const items = [shuffledData[0], shuffledData[1], shuffledData[2]];
+    setShuffledData((prevData) => prevData.slice(3, prevData.length));
+    return items;
+  });
   const [showEndScreen, setShowEndScreen] = useState(false);
+  const [showWinScreen, setShowWinScreen] = useState(false);
+
+  const correctButton = useRef();
+  const incorrectButton = useRef();
+
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(getFromLocalStore(gameType));
 
   const divider = useRef();
-
   const clickButtonCb = (btnType, callback) => {
     const countryItems = [...document.querySelectorAll('.country-item')];
 
-    setTimeout(async () => {
-      let isCorrect = true;
-      if (btnType === 'bigger') {
-        if (items[1].stat < items[0].stat) {
-          isCorrect = false;
-        }
-      } else {
-        if (items[1].stat > items[0].stat) {
-          isCorrect = false;
-        }
+    let isCorrect = true;
+    if (btnType === 'bigger') {
+      if (items[1].stat < items[0].stat) {
+        isCorrect = false;
       }
-
+    } else {
+      if (items[1].stat > items[0].stat) {
+        isCorrect = false;
+      }
+    }
+    setTimeout(async () => {
       if (isCorrect) {
         if (score + 1 > highScore) {
           storeInLocalStoreAndUpdate(highScore + 1, gameType, () =>
             setHighScore(highScore + 1)
           );
         }
+        correctButton.current.classList.add('show');
         setScore(score + 1);
         divider.current.style.display = 'none';
+
+        if (shuffledData.length === 0) {
+          setShowWinScreen(true);
+          return;
+        }
 
         for (let i = -25; i <= 25; i++) {
           countryItems.forEach((c) => (c.style.right = `${i}%`));
           await sleep(15);
         }
+        correctButton.current.classList.remove('show');
+
         divider.current.style.display = 'inherit';
         countryItems.forEach((c) => (c.style.right = '-25%'));
-        setItems((prev) => [prev[1], prev[2], getRandomItem(data)]);
+        setItems((prev) => {
+          const items = [prev[1], prev[2], shuffledData[0]];
+          setShuffledData((prevData) => prevData.slice(1, prevData.length));
+          return items;
+        });
         callback();
       } else {
+        incorrectButton.current.classList.add('show');
+        await sleep(1000);
         setShowEndScreen(true);
+        incorrectButton.current.classList.remove('show');
       }
-    }, 2000);
+    }, 1700);
   };
 
   const endScreenCb = () => {
     setShowEndScreen(false);
-    setItems([getRandomItem(data), getRandomItem(data), getRandomItem(data)]);
+    setShowWinScreen(false);
+
+    const newShuffledData = shuffleArray(data);
+    setShuffledData(newShuffledData);
+
+    setItems(() => {
+      const items = [
+        newShuffledData[0],
+        newShuffledData[1],
+        newShuffledData[2],
+      ];
+      setShuffledData((prevData) => prevData.slice(3, prevData.length));
+      return items;
+    });
     setScore(0);
   };
 
@@ -69,6 +103,8 @@ export default function MoreOrLess({ gameType, label, statExtra, data }) {
     <>
       {showEndScreen ? (
         <EndScreen score={score} againCb={endScreenCb} />
+      ) : showWinScreen ? (
+        <WinScreen score={score} againCb={endScreenCb} />
       ) : (
         <div className='page-container' style={{ overflow: 'hidden' }}>
           <div className='score-container'>
@@ -77,6 +113,20 @@ export default function MoreOrLess({ gameType, label, statExtra, data }) {
               <div className='score-label'>Score</div>
             </div>
             <div className='divider' ref={divider}></div>
+            <>
+              <img
+                ref={incorrectButton}
+                className='icon incorrect-correct'
+                src='../icons/incorrect-answer.png'
+                alt='Game banner'
+              />
+              <img
+                ref={correctButton}
+                className='icon incorrect-correct'
+                src='../icons/correct-answer.png'
+                alt='Game banner'
+              />
+            </>
             <div className='highscore-item'>
               <div className='highscore-count'>{highScore}</div>
               <div className='highscore-label'>Highscore</div>

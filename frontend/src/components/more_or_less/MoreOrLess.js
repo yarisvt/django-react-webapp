@@ -10,7 +10,7 @@ import {
 } from '../../utils/utils.js';
 import WinScreen from './WinScreen';
 
-export default function MoreOrLess({ gameType, label, statExtra, data }) {
+export default function MoreOrLess({ id, label, statExtra, data }) {
   const [shuffledData, setShuffledData] = useState(shuffleArray(data));
 
   const [items, setItems] = useState(() => {
@@ -25,7 +25,7 @@ export default function MoreOrLess({ gameType, label, statExtra, data }) {
   const incorrectButton = useRef();
 
   const [score, setScore] = useState(0);
-  const [highScore, setHighScore] = useState(getFromLocalStore(gameType));
+  const [highScore, setHighScore] = useState(getFromLocalStore(id));
 
   const divider = useRef();
   const clickButtonCb = (btnType, callback) => {
@@ -44,7 +44,7 @@ export default function MoreOrLess({ gameType, label, statExtra, data }) {
     setTimeout(async () => {
       if (isCorrect) {
         if (score + 1 > highScore) {
-          storeInLocalStoreAndUpdate(highScore + 1, gameType, () =>
+          storeInLocalStoreAndUpdate(highScore + 1, id, () =>
             setHighScore(highScore + 1)
           );
         }

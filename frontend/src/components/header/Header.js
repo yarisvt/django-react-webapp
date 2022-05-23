@@ -29,10 +29,21 @@ function Header() {
   return (
     <header>
       {showHome && (
-        <a className='link-home' onClick={() => navigate(-1)}>
-          &lsaquo; Back
-        </a>
+        <>
+          <a className='header-item' onClick={() => navigate(-1)}>
+            &lsaquo; Back
+          </a>
+          <div className='games'>
+            <Link to='/more-or-less' className='header-item'>
+              More or Less
+            </Link>
+            <Link to='/quiz' className='header-item'>
+              Quizzes
+            </Link>
+          </div>
+        </>
       )}
+
       <button onClick={toggleTheme} className='header-item'>
         <svg
           version='1.1'

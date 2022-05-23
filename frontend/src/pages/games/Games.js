@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import GameInfo from '../../components/game_info/GameInfo';
 import './games.scss';
 
-export default function Games() {
+export default function Games({ gameType }) {
   const [games, setGames] = useState([]);
 
   useEffect(() => {
@@ -11,11 +11,13 @@ export default function Games() {
       .then(setGames);
   }, []);
 
+  console.log(gameType);
   return (
     <div className='games-container'>
-      {games.map((game) => (
-        <GameInfo key={game.id} {...game} />
-      ))}
+      {games &&
+        games
+          .filter((game) => game.gameType === gameType)
+          .map((game) => <GameInfo key={game.id} {...game} />)}
     </div>
   );
 }

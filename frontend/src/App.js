@@ -16,7 +16,12 @@ function App() {
           <Header />
           <Routes>
             <Route exact path='/' element={<Home />} />
-            <Route path='/games' element={<Games />} />
+            <Route path='/games' element={<Games gameType='moreorless' />} />
+            <Route
+              path='/more-or-less'
+              element={<Games gameType='moreorless' />}
+            />
+            <Route path='/quiz' element={<Games gameType='quiz' />} />
             <Route path='/games/:id' element={<Game />} />
             <Route
               path='*'

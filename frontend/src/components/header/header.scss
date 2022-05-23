@@ -11,7 +11,15 @@ header {
   fill: var(--contrastTextColor);
   margin-bottom: 0.5rem;
 
-  .link-home {
+  .games {
+    display: flex;
+    // width: 80%;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 1.5rem;
+  }
+
+  .header-item {
     text-decoration: none;
     padding: 1rem;
     font-size: 1.5rem;
@@ -19,7 +27,7 @@ header {
     cursor: pointer;
   }
 
-  .link-home:hover {
+  .header-item:hover {
     text-decoration: underline;
     color: var(--contrastTextColorHover);
   }

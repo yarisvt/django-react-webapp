@@ -11,7 +11,6 @@ export default function Games({ gameType }) {
       .then(setGames);
   }, []);
 
-  console.log(gameType);
   return (
     <div className='games-container'>
       {games &&

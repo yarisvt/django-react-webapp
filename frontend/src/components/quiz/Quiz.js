@@ -1,15 +1,42 @@
-import React, { useState, useEffect } from 'react';
-import { getRandomItem, shuffleArray } from '../../utils/utils';
+import React, { useState, useEffect, useRef } from 'react';
+import Countdown, { zeroPad } from 'react-countdown';
+import {
+  shuffleArray,
+  storeInLocalStoreAndUpdate,
+  getFromLocalStore,
+} from '../../utils/utils';
 import './quiz.scss';
 
+const countdownRenderer = ({ minutes, seconds }) => (
+  <span>
+    {zeroPad(minutes)}:{zeroPad(seconds)}
+  </span>
+);
+
+const CountdownWrapper = ({ endedCb }) => {
+  return (
+    <Countdown
+      date={Date.now() + 1000 * 60 * 20 - 1000}
+      renderer={countdownRenderer}
+      onComplete={endedCb}
+    />
+  );
+};
+const MemoCountdown = React.memo(CountdownWrapper);
+
 export default function Quiz({ id, label, statExtra, data }) {
+  console.log(data);
   const [countryData, setCountryData] = useState([]);
   const [index, setIndex] = useState(0);
+  const [numberCorrect, setNumberCorrect] = useState(0);
+  const [highScore, setHighScore] = useState(getFromLocalStore(id));
   const [showEndScreen, setShowEndScreen] = useState(false);
+  const [showStartButton, setShowStartButton] = useState(true);
+
+  const textInputRef = useRef();
 
   useEffect(() => {
-    const shuffeledData = shuffleArray(data);
-    setCountryData(shuffeledData);
+    setCountryData(shuffleArray(data));
   }, []);
 
   const clickPrevBtn = () => {
@@ -43,6 +70,12 @@ export default function Quiz({ id, label, statExtra, data }) {
       ),
     ];
     if (correctAnswers.includes(countryInput)) {
+      if (numberCorrect + 1 > highScore) {
+        storeInLocalStoreAndUpdate(numberCorrect + 1, id, () =>
+          setHighScore(highScore + 1)
+        );
+      }
+      setNumberCorrect(numberCorrect + 1);
       setCountryData((prev) =>
         prev.map((country) => {
           if (country.country === countryData[index].country) {
@@ -52,12 +85,6 @@ export default function Quiz({ id, label, statExtra, data }) {
         })
       );
 
-      let numberCorrect = 0;
-      countryData.forEach((country) => {
-        if (country.showCountry === true) {
-          numberCorrect++;
-        }
-      });
       if (numberCorrect === countryData.length - 1) {
         setShowEndScreen(true);
       }
@@ -67,40 +94,78 @@ export default function Quiz({ id, label, statExtra, data }) {
   };
 
   const clickCountry = (idx) => {
+    textInputRef.current.value = '';
+    textInputRef.current.focus();
     setIndex(idx);
+  };
+
+  const clickStart = () => {
+    setShowStartButton(false);
   };
 
   return (
     <div className='quiz-page-container'>
-      <div className='quiz-input-container'>
+      <div className='quiz-header-container'>
         {countryData.length > 0 && !showEndScreen && (
-          <div className='quiz-input-container'>
-            <img
-              className='quiz-country-flag'
-              src={`${window.location.origin}/img/flags/${countryData[
-                index
-              ].countryCode.toLowerCase()}.svg`}
-            />
-            <button className='quiz-button' onClick={clickPrevBtn}>
-              &lsaquo; Prev
-            </button>
-            <div className='quiz-input'>
-              <label htmlFor='country' className='quiz-input-label'>
-                Country:
-              </label>
-              <input
-                autoComplete='off'
-                type='text'
-                name='country'
-                className='quiz-input-box'
-                onChange={checkAnswer}
-              />
+          <>
+            <div className='quiz-info-container'>
+              {showStartButton ? (
+                <button className='quiz-button' onClick={clickStart}>
+                  Start
+                </button>
+              ) : (
+                <>
+                  <div className='quiz-countdown-timer'>
+                    <div>Time: </div>
+                    <MemoCountdown endedCb={() => setShowEndScreen(true)} />
+                  </div>
+                  <div className='quiz-score-container'>
+                    <div>Score:</div>
+                    <div>
+                      {numberCorrect}/{countryData.length}
+                    </div>
+                  </div>
+                  <div className='quiz-score-container'>
+                    <div>HighScore:</div>
+                    <div>
+                      {highScore}/{countryData.length}
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
-            <button className='quiz-button' onClick={clickNextBtn}>
-              Next &rsaquo;
-            </button>
-          </div>
-        )}{' '}
+            {!showStartButton && (
+              <div className='quiz-input-container'>
+                <img
+                  className='quiz-country-flag'
+                  src={`${window.location.origin}/img/flags/${countryData[
+                    index
+                  ].countryCode.toLowerCase()}.svg`}
+                />
+                <button className='quiz-button' onClick={clickPrevBtn}>
+                  &lsaquo; Prev
+                </button>
+                <div className='quiz-input'>
+                  <label htmlFor='country' className='quiz-input-label'>
+                    Country:
+                  </label>
+                  <input
+                    autoFocus={true}
+                    ref={textInputRef}
+                    autoComplete='off'
+                    type='text'
+                    name='country'
+                    className='quiz-input-box'
+                    onChange={checkAnswer}
+                  />
+                </div>
+                <button className='quiz-button' onClick={clickNextBtn}>
+                  Next &rsaquo;
+                </button>
+              </div>
+            )}
+          </>
+        )}
         {showEndScreen && <div className='quiz-finished'>Well done!</div>}
       </div>
       <div className='quiz-flags-container'>

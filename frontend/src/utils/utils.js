@@ -5,6 +5,9 @@ const getRandomItem = (arr, i) => {
   return arr[Math.floor(Math.random() * arr.length)];
 };
 
+const getRandomNumberBetween = (min, max) =>
+  Math.floor(Math.random() * (max - min) + min);
+
 const shuffleArray = (arr) => arr.sort(() => Math.random() - 0.5);
 
 const storeInLocalStoreAndUpdate = (highScore, gameType, cb) => {
@@ -21,6 +24,7 @@ const sleep = (ms) => new Promise((res) => setTimeout(res, ms));
 
 export {
   getRandomItem,
+  getRandomNumberBetween,
   shuffleArray,
   storeInLocalStoreAndUpdate,
   getFromLocalStore,

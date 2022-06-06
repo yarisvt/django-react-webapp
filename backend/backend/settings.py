@@ -32,7 +32,7 @@ STATIC_ROOT = os.path.join(PROJECT_ROOT, "staticfiles")
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True if os.environ.get("DEBUG") == "True" else False
 
 ALLOWED_HOSTS = ["localhost", "moreorless-yaris.herokuapp.com"]
 

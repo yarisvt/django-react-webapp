@@ -1,0 +1,30 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+
+[packages]
+asgiref = "*"
+black = "*"
+click = "*"
+colorama = "*"
+dj-database-url = "*"
+Django = "*"
+django-cors-headers = "*"
+django-environ = "*"
+django_heroku = "*"
+djangorestframework = "*"
+gunicorn = "*"
+mypy-extensions = "*"
+mysqlclient = "*"
+pathspec = "*"
+platformdirs = "*"
+psycopg2 = "*"
+pytz = "*"
+sqlparse = "*"
+tomli = "*"
+typing_extensions = "*"
+tzdata = "*"
+whitenoise = "*"
+
+[requires]
+python_version = "3.9.7"

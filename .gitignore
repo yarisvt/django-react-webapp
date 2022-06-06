@@ -1,4 +1,8 @@
 node_modules
 env
+*.env
 docker_env
 local_env
+heroku_env
+# Local Netlify folder
+.netlify

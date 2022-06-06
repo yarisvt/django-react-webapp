@@ -25,7 +25,6 @@ const CountdownWrapper = ({ endedCb }) => {
 const MemoCountdown = React.memo(CountdownWrapper);
 
 export default function Quiz({ id, label, statExtra, data }) {
-  console.log(data);
   const [countryData, setCountryData] = useState([]);
   const [index, setIndex] = useState(0);
   const [numberCorrect, setNumberCorrect] = useState(0);

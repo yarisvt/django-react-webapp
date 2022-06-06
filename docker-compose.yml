@@ -20,17 +20,15 @@ services:
     ports:
       - "50075:3000"
   db:
-    image: mariadb:10.5.9
-    command:
-      - '--character-set-server=utf8mb4'
-      - '--collation-server=utf8mb4_unicode_ci'
-    restart: unless-stopped
+    image: postgres:14.1-alpine
+    restart: always
     env_file:
       - backend/.env
     ports:
-      - "50074:3306"
+      - "5432:5432"
     volumes:
-      - mariadb_data:/var/lib/mysql
+      - db:/var/lib/postgresql/data
 
 volumes:
-  mariadb_data:
+  db:
+    driver: local

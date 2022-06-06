@@ -12,6 +12,8 @@ from .models import (
 from .serializers import GameInfoSerializer, GameSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from django.db import connection
+
 
 # Create your views here.
 
@@ -40,6 +42,7 @@ class AllGamesView(APIView):
 class GameInfoView(APIView):
     serializer_class = GameInfoSerializer
     lookup_url_kwarg = "game-id"
+    print("=========================================QUERY", connection.queries)
 
     def get(self, request):
         game_id = request.GET.get(self.lookup_url_kwarg)

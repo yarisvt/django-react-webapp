@@ -11,11 +11,11 @@ from django.db import models
 class Capital(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=50)
-    country = models.ForeignKey("Country", models.DO_NOTHING)
+    country = models.ForeignKey("country", models.DO_NOTHING)
 
     class Meta:
         managed = False
-        db_table = "Capital"
+        db_table = "capital"
 
 
 class Capitalalias(models.Model):
@@ -25,7 +25,7 @@ class Capitalalias(models.Model):
 
     class Meta:
         managed = False
-        db_table = "CapitalAlias"
+        db_table = "capitalalias"
 
 
 class Continent(models.Model):
@@ -34,7 +34,7 @@ class Continent(models.Model):
 
     class Meta:
         managed = False
-        db_table = "Continent"
+        db_table = "continent"
 
 
 class Country(models.Model):
@@ -46,7 +46,7 @@ class Country(models.Model):
 
     class Meta:
         managed = False
-        db_table = "Country"
+        db_table = "country"
 
 
 class Countryalias(models.Model):
@@ -56,7 +56,7 @@ class Countryalias(models.Model):
 
     class Meta:
         managed = False
-        db_table = "CountryAlias"
+        db_table = "countryalias"
 
 
 class Countrycontinent(models.Model):
@@ -66,7 +66,7 @@ class Countrycontinent(models.Model):
 
     class Meta:
         managed = False
-        db_table = "CountryContinent"
+        db_table = "countrycontinent"
 
 
 class GameType(models.Model):
@@ -75,7 +75,7 @@ class GameType(models.Model):
 
     class Meta:
         managed = False
-        db_table = "GameType"
+        db_table = "gametype"
 
 
 class Game(models.Model):
@@ -88,7 +88,7 @@ class Game(models.Model):
 
     class Meta:
         managed = False
-        db_table = "Game"
+        db_table = "game"
 
 
 class GameInformation(models.Model):
@@ -106,4 +106,4 @@ class GameInformation(models.Model):
 
     class Meta:
         managed = False
-        db_table = "GameInformation"
+        db_table = "gameinformation"
